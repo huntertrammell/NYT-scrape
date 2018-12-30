@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-info my-2 my-sm-0 header-text text-white">Scrape Articles</button>
+                <a class="btn btn-outline-info my-2 my-sm-0 header-text text-white" href="/scrape">Scrape Articles</a>
             </form>
         </div>
     </nav>

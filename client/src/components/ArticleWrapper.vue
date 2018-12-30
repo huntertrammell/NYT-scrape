@@ -10,7 +10,6 @@
 
 <script>
 import moment from 'moment'
-import weather from 'weather-js'
 import ArticleBody from '@/components/ArticleBody'
 export default {
   name: 'ArticleWrapper',
@@ -24,6 +23,7 @@ export default {
     appArticleBody: ArticleBody
   },
   methods: {
+    //attempting to link weather package from NPM, will come back to this
     /*async getWeather() {
       weather.find({search: 'Kansas City', degreeType: 'F'}, function(err, result) {
         if(err) console.log(err);

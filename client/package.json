@@ -11,8 +11,7 @@
     "bootstrap": "^4.2.1",
     "moment": "^2.23.0",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
-    "weather-js": "^2.0.0"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",

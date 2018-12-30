@@ -19,8 +19,13 @@
   "homepage": "https://github.com/huntertrammell/NYT-scrape#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
-    "mongoose": "^5.4.1"
+    "mongoose": "^5.4.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "request": "^2.88.0"
   }
 }
