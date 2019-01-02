@@ -31,13 +31,25 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/api/comments/:articleId/:time', (req, res) => {
+    db.Article.update({ _id: ObjectId(req.params.articleId) }, 
+    {$pull: {comments: {time: req.params.time}}})
+      .then(response => {
+        res.send(response);
+      });
+      
+  });
+
   app.post('/api/comments/:id', function (req, res){
+    console.log(req.body)
     const articleId = req.params.id;
     const user = req.body.user;
     const comment = req.body.comment;
+    const time = req.body.time;
     const result = {
       user: user,
-      comment: comment
+      comment: comment,
+      time: time
     };
     db.Article.findOneAndUpdate({'_id': ObjectId(articleId)}, {$push: {'comments':result}})
     .then(function(result){
@@ -47,19 +59,8 @@ module.exports = function(app) {
       res.json(err);
     });
   })
-  
-  app.get('api/comments/:id',function (req,res){
-    var articleId = req.params.id;
-    db.Comment.find({'_id': ObjectId(articleId)})
-    .then(function(result){
-      console.log(result)
-    })
-    .catch(function(err) {
-      res.json(err);
-    })
-  });
 
-  app.get("/scrape", function(req, res) {
+  app.get("/api/scrape", function(req, res) {
     request("https://www.nytimes.com/section/technology", function(error, response, html) {
       const $ = cheerio.load(html);
       $("#stream-panel div ol li").each(function(i, element) {

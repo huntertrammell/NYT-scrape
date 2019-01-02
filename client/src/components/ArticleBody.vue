@@ -12,7 +12,8 @@
                             :img="article.img" 
                             :date="article.date"
                             :id="article.id"
-                            :likes="article.likes"/>
+                            :likes="article.likes"
+                            :comments="article.comments"/>
                 </div>
             </div>
         </div>
@@ -58,7 +59,8 @@ export default {
                     img: article.img,
                     author: article.author,
                     date: article.date,
-                    likes: article.likes
+                    likes: article.likes,
+                    comments: article.comments
                 })
             })
         })
@@ -83,7 +85,7 @@ export default {
             column-count: 4;
         }
         @include media-breakpoint-only(xl) {
-            column-count: 5;
+            column-count: 4;
         }
     }
 </style>

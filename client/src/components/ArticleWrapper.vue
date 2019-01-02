@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="intro">
-      <h5 class="header-text text-center pt-2">{{ date }}</h5>
+      <h5 class="header-text text-center pt-2 text-white">{{ date }}</h5>
       <hr class="px-2">
     </div>
     <app-article-body/>
@@ -43,6 +43,6 @@ export default {
 
 <style>
 .intro {
-  background: #fffef8;
+  background: #313131da;
 }
 </style>
