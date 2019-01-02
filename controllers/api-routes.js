@@ -6,6 +6,15 @@ var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function(app) {
 
+  app.get("/api/articles/:articleId/:likeCount", (req, res) => {
+    db.Article.update({ _id: ObjectId(req.params.articleId) }, 
+    {$set: {likes: req.params.likeCount}})
+      .then(response => {
+        res.send(response);
+      });
+      
+  });
+
   app.get("/api/articles", function(req, res) {
     db.Article.find({})
       .then(function(dbArticle) {
@@ -20,6 +29,34 @@ module.exports = function(app) {
     db.Article.collection.drop().then(() => {
       res.send("DB Emptied");
     });
+  });
+
+  app.post('/api/comments/:id', function (req, res){
+    const articleId = req.params.id;
+    const user = req.body.user;
+    const comment = req.body.comment;
+    const result = {
+      user: user,
+      comment: comment
+    };
+    db.Article.findOneAndUpdate({'_id': ObjectId(articleId)}, {$push: {'comments':result}})
+    .then(function(result){
+      console.log("Comment Added:"+ result)
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+  })
+  
+  app.get('api/comments/:id',function (req,res){
+    var articleId = req.params.id;
+    db.Comment.find({'_id': ObjectId(articleId)})
+    .then(function(result){
+      console.log(result)
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
   });
 
   app.get("/scrape", function(req, res) {
@@ -37,7 +74,8 @@ module.exports = function(app) {
           .attr("href")
 
         result.summary = $(element)
-          .find("p")
+          .find("a")
+          .children("p")
           .text()
           .trim()
         
@@ -56,13 +94,18 @@ module.exports = function(app) {
           .attr("href")
           .substr(1, 10)
 
-        console.log(result);
-        db.Article.create(result)
-          .then(function(dbArticle) {
-            res.send("Scrape Is Finished");
-          })
-          .catch(function(err) {
-          });
+        db.Article.countDocuments({title: result.title}, function(err, exists){
+          if (exists === 0){
+            db.Article.create(result)
+            .then(function(dbArticle) {
+              console.log("Article Added");
+            })
+            .catch(function(err) {
+            });
+          } else {
+            console.log("Article already scraped to DB")
+          }
+        })
       });
     });
   });

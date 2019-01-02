@@ -25,6 +25,14 @@ const ArticleSchema = mongoose.Schema(
         author: {
             type: String,
             required: true
+        },
+        likes: {
+            type: String,
+            default: "0"
+        },
+        comments: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
         }
     }
 );

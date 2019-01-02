@@ -10,7 +10,9 @@
                             :author="article.author" 
                             :summary="article.summary" 
                             :img="article.img" 
-                            :date="article.date"/>
+                            :date="article.date"
+                            :id="article.id"
+                            :likes="article.likes"/>
                 </div>
             </div>
         </div>
@@ -55,7 +57,8 @@ export default {
                     summary: article.summary,
                     img: article.img,
                     author: article.author,
-                    date: article.date
+                    date: article.date,
+                    likes: article.likes
                 })
             })
         })
