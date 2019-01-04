@@ -7,7 +7,7 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = function(app) {
 
   app.get("/api/articles/:articleId/:likeCount", (req, res) => {
-    db.Article.update({ _id: ObjectId(req.params.articleId) }, 
+    db.Article.findOneAndUpdate({ _id: ObjectId(req.params.articleId) }, 
     {$set: {likes: req.params.likeCount}})
       .then(response => {
         res.send(response);
@@ -26,17 +26,17 @@ module.exports = function(app) {
   });
 
   app.get("/api/empty", (req, res) => {
-    db.Article.collection.drop().then(() => {
-      res.send("DB Emptied");
+    db.Article.collection.drop().then(res => {
+      console.log(res);
     });
   });
 
   app.get('/api/comments/remove/:articleId/:id', (req, res) => {
     console.log(req.params)
-    db.Article.update({ _id: ObjectId(req.params.articleId) }, 
+    db.Article.findOneAndUpdate({ _id: ObjectId(req.params.articleId) }, 
     {$pull: {comments: {_id: ObjectId(req.params.id)}}})
-      .then(response => {
-        res.send(response);
+      .then(res => {
+        console.log(res);
       });
       
   });
@@ -97,7 +97,7 @@ module.exports = function(app) {
         db.Article.countDocuments({title: result.title}, function(err, exists){
           if (exists === 0){
             db.Article.create(result)
-            .then(function(dbArticle) {
+            .then(function(res) {
               console.log("Article Added");
             })
             .catch(function(err) {
@@ -107,6 +107,6 @@ module.exports = function(app) {
           }
         })
       });
-    });
+    })
   });
 };

@@ -15,10 +15,14 @@
                     <small> {{ likeCount }} Likes</small>
                 </div>
                 <div class="comments col-6 text-right">
-                    <a class="comments" href="#commentSection" data-toggle="collapse"><i class="far fa-comment"></i> <small> Comments ({{ commentCount }})</small></a>
+                    <a class="comments" href="#" @click="expanded === false ? expanded = true : expanded = false"><i class="far fa-comment"></i> <small> Comments ({{ commentCount }})</small></a>
                 </div>
             </div>
-            <app-comment :comments="comments" :id="id"/>
+            <transition name="bounce">
+               <app-comment :comments="comments" 
+                            :id="id" 
+                            v-if="expanded"/>
+            </transition>
         </div>
     </div>
 </template>
@@ -26,7 +30,6 @@
 <script>
 import moment from 'moment'
 import axios from 'axios'
-import 'bootstrap';
 import Comment from '@/components/Comment'
 export default {
     name: 'Article',
@@ -49,6 +52,7 @@ export default {
             clicked: false,
             likeCount: parseInt(this.$props.likes),
             commentCount: 0,
+            expanded: false,
         }
     },
     filters: {
@@ -108,5 +112,19 @@ export default {
 }
 .likes {
     color: #34aec0;
+}
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
