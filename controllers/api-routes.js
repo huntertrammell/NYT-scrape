@@ -31,9 +31,10 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/comments/:articleId/:time', (req, res) => {
+  app.get('/api/comments/remove/:articleId/:id', (req, res) => {
+    console.log(req.params)
     db.Article.update({ _id: ObjectId(req.params.articleId) }, 
-    {$pull: {comments: {time: req.params.time}}})
+    {$pull: {comments: {_id: ObjectId(req.params.id)}}})
       .then(response => {
         res.send(response);
       });
@@ -43,13 +44,11 @@ module.exports = function(app) {
   app.post('/api/comments/:id', function (req, res){
     console.log(req.body)
     const articleId = req.params.id;
-    const user = req.body.user;
-    const comment = req.body.comment;
-    const time = req.body.time;
     const result = {
-      user: user,
-      comment: comment,
-      time: time
+      _id: ObjectId(),
+      user: req.body.user,
+      comment: req.body.comment,
+      time: req.body.time
     };
     db.Article.findOneAndUpdate({'_id': ObjectId(articleId)}, {$push: {'comments':result}})
     .then(function(result){

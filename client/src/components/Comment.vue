@@ -1,12 +1,12 @@
 <template>
     <div class="collapse" id="commentSection">
-        <div v-for="comment in comments" :key="comment.user"> <!--This is where v-for will go-->
+        <div v-for="comment in comments" :key="comment._id"> <!--This is where v-for will go-->
             <hr>
             <div class="body-text">
                 <small><strong>{{ comment.user }}: </strong>{{ comment.comment }}</small>
                 <br>
                 <small class="text-muted">{{ comment.time }}</small>
-                <a href="" class="float-right"><small class="text-muted" @click="removeComment()">delete</small></a>
+                <a href="" class="float-right"><small class="text-muted" @click.prevent="removeComment()">delete</small></a>
             </div>
         </div>
         <form class="pt-4">
@@ -28,7 +28,7 @@ export default {
     data(){
         return {
             user: '',
-            comment: ''
+            comment: '',
         }
     },
     props: ['comments', 'id'],
@@ -48,8 +48,9 @@ export default {
             });
         },
         removeComment(){
+            console.log(this.$props.comments[0]._id)
             axios
-            .get('/api/comments/remove/'+this.$props.id+'/'+this.$props.comment.time)
+            .get('/api/comments/remove/'+this.$props.id+'/'+this.$props.comments[0]._id)
             .then(response => {
                 console.log(response);
             })
