@@ -22,9 +22,6 @@ app.use(express.static(__dirname, 'dist'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static('./client/dist'));
-
-
 require("./controllers/api-routes.js")(app);
 
 app.listen(PORT, function() {
