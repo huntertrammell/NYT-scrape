@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import API from './views/API'
+import Home from './views/Home'
+import Scrape from './views/Scrape'
+import Empty from './views/Empty'
 
 Vue.use(Router)
 
@@ -17,12 +18,12 @@ export default new Router({
     {
       path: '/api/scrape',
       name: 'scrape',
-      component: API
+      component: Scrape
     },
     {
       path: '/api/empty',
       name: 'empty',
-      component: API
+      component: Empty
     }
   ]
 })
