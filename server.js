@@ -8,7 +8,9 @@ const PORT = process.env.PORT || 3000;
 
 const db = require("./models");
 
-mongoose.connect("mongodb://localhost/nyt-vue-scrapper", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
