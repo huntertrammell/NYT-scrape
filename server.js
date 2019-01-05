@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-app.use(express.static('./client/dist'));
+app.use(express.static(__dirname, 'dist'));
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
