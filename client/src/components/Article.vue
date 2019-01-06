@@ -65,7 +65,10 @@ export default {
             this.clicked = true
             this.likeCount++
             axios
-            .get('/api/articles/'+ this.$props.id + '/' +this.likeCount)
+            .put('/api/articles/addlike', {
+                id: this.$props.id,
+                likes: this.likeCount
+            })
             .then(response => {
                 console.log(response);
             })

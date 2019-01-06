@@ -13,10 +13,10 @@
             <hr>
             <input type="text" class="form-control mb-1" placeholder="Username" v-model="user">
             <textarea type="text" class="form-control" placeholder="Add Comment..." v-model="comment"></textarea>
-            <div class="m-2 text-center">
-                <input class="btn btn-outline-info" type="submit" value="Submit" @click="addComment(user, comment)">
-            </div>
         </form>
+        <div class="mt-1 text-center">
+            <button class="btn btn-outline-info my-2" @click="addComment()">Add Comment</button>
+        </div>
     </div>
 </template>
 
@@ -33,8 +33,10 @@ export default {
     props: ['comments', 'id'],
     methods: {
         addComment(user, comment){
+            console.log("ive been pressed")
             axios
-            .post('/api/comments/'+this.$props.id, {
+            .post('/api/comments/create', {
+                refID: this.$props.id,
                 user: this.user,
                 comment: this.comment,
                 time: moment().format("MM/DD/YY hh:mm a")
@@ -45,6 +47,7 @@ export default {
             .catch(error => {
                 console.log(error);
             });
+            this.$router.go('/')
         },
         removeComment(){
             console.log(this.$props.comments[0]._id)

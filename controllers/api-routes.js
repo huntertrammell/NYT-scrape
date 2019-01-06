@@ -6,9 +6,10 @@ var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function(app) {
 
-  app.get("/api/articles/:articleId/:likeCount", (req, res) => {
-    db.Article.findOneAndUpdate({ _id: ObjectId(req.params.articleId) }, 
-    {$set: {likes: req.params.likeCount}})
+  app.put("/api/articles/addlike", (req, res) => {
+    console.log(req.body)
+    db.Article.findOneAndUpdate({ _id: ObjectId(req.body.id) }, 
+    {$set: {likes: req.body.likes}})
       .then(response => {
         res.send(response);
       });
@@ -41,9 +42,9 @@ module.exports = function(app) {
       
   });
 
-  app.post('/api/comments/:id', function (req, res){
+  app.post('/api/comments/create', function (req, res){
     console.log(req.body)
-    const articleId = req.params.id;
+    const articleId = req.body.refID;
     const result = {
       _id: ObjectId(),
       user: req.body.user,
